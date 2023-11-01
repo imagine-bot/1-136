@@ -7,25 +7,27 @@ interface Review {
 }
 
 interface ProductProps {
-  sku: string;
+  id: string;
 }
 
 interface ProductData {
+  id: string;
   name: string;
   description: string;
   price: number;
   quantity: number;
+  imageUrl: string;
   reviews: Review[];
 }
 
-const Product: React.FC<ProductProps> = ({ sku }) => {
+const Product: React.FC<ProductProps> = ({ id }) => {
   const [product, setProduct] = useState<ProductData | null>(null);
 
   useEffect(() => {
-    fetch(`/api/products/${sku}`)
+    fetch(`/api/products/${id}`)
       .then(response => response.json())
       .then(data => setProduct(data));
-  }, [sku]);
+  }, [id]);
 
   if (!product) {
     return <div>Loading...</div>;
@@ -34,7 +36,7 @@ const Product: React.FC<ProductProps> = ({ sku }) => {
   return (
     <div className="flex flex-col bg-white shadow-lg rounded-lg max-w-md mx-auto">
       <div className="flex justify-center pt-4">
-        <img className="h-48 w-full object-cover" src="https://source.unsplash.com/random" alt={product.name} />
+        <img className="h-48 w-full object-cover" src={product.imageUrl} alt={product.name} />
       </div>
       <div className="px-5 py-3">
         <h3 className="text-gray-700 uppercase">{product.name}</h3>
@@ -46,7 +48,7 @@ const Product: React.FC<ProductProps> = ({ sku }) => {
       </div>
       <div className="px-5 py-2">
         <h3 className="text-gray-700">SKU</h3>
-        <p className="text-gray-500 text-sm">{sku}</p>
+        <p className="text-gray-500 text-sm">{product.id}</p>
       </div>
       <div className="px-5 py-2">
         <h3 className="text-gray-700">Quantity Available</h3>
