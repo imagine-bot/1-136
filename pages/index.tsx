@@ -9,7 +9,7 @@ export default function Home() {
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
-      <Product sku="123456789" />
+      <Product id="123456789" />
     </main>
   )
 }
